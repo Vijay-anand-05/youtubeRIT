@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: #384047;
+        }
+
+        form {
+            max-width: 300px;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background: #f4f7f8;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0 0 30px 0;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            background-color: #e8eeef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            height: auto;
+            margin: 0;
+            outline: none;
+            padding: 15px;
+            width: 100%;
+            color: #8a97a0;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            background-color: #e8eeef;
+            border-color: #ced4da;
+            outline: none;
+        }
+
+        input[type="text"]:hover,
+        input[type="password"]:hover {
+            background-color: #e8eeef;
+            border-color: #ced4da;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group .input-group-text {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+
+        .input-group input {
+            padding-right: 2.5rem; /* Adjust this value to provide space for the eye icon */
+        }
+
+        button {
+            padding: 19px 39px 18px 39px;
+            color: #FFF;
+            background-color: #4bc970;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 5px;
+            width: 100%;
+            border: 1px solid #3ac162;
+            border-width: 1px 1px 3px;
+            box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+            margin-bottom: 10px;
+        }
+
+        @media screen and (min-width: 480px) {
+            form {
+                max-width: 480px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="btn btn-primary home-button">
+        <i class="fas fa-home"></i> Home
+    </a>
+    
+    <form action="{% url 'staff_login' %}" method="POST" class="mt-5">
+        {% csrf_token %}
+        <h1 class="text-center">
+            <i class="fas fa-user-plus"></i> Staff Sign In
+        </h1>
+
+        <fieldset>
+            <!-- Staff ID Field -->
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Staff ID <span class="text-danger">*</span></label>
+                {{ form.username }}
+                <span class="text-danger">{{ form.username.errors }}</span>
+            </div>
+
+            <!-- Password Field with Toggle -->
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    {{ form.password }}
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="fa fa-eye" id="togglePassword"></i>
+                        </span>
+                    </div>
+                </div>
+                <span class="text-danger">{{ form.password.errors }}</span>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-block mt-4">Log In</button>
+
+            <!-- Register Link -->
+            <div class="text-center mt-3">
+                <p>Don't have an account?</p>
+                <a href="{% url 'staff_register' %}" class="btn btn-outline-danger">Register</a>
+            </div>
+        </fieldset>
+    </form>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.querySelector('input[name="password"]');
+  
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+</body>
+</html>
