@@ -8,4 +8,6 @@ urlpatterns = [
     path('login/', views.staff_login, name='staff_login'),
     path('logout/', views.staff_logout, name='staff_logout'),
     path('dashboard/', views.dashboard, name="dashboard"),
+    path('upload_video/', views.upload_video, name="upload_video"),
+    path('video/<int:video_id>/', views.play_video, name='play_video'),
 ]

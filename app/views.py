@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import StaffLoginForm, StaffRegistrationForm
+from .forms import StaffLoginForm, StaffRegistrationForm, YouTubeVideoForm
+from .models import YouTubeVideo
 
 def home(request):
     """Render the home page."""
-    return render(request, "index.html")
+    videos = YouTubeVideo.objects.all()
+    return render(request, "index.html", {'videos' : videos})
 
 def staff_register(request):
     if request.method == 'POST':
@@ -40,9 +42,28 @@ def staff_login(request):
 @login_required  # Ensure only logged-in users can access the dashboard
 def dashboard(request):
     """Render the dashboard page."""
-    return render(request, 'dashboard.html')
+    videos = YouTubeVideo.objects.all()
+    return render(request, 'dashboard.html', {'videos' : videos})
 
 def staff_logout(request):
     """Handle user logout."""
     logout(request)
     return redirect('staff_login')  # Redirect to login page after logout
+
+
+
+def upload_video(request):
+    if request.method == 'POST':
+        form = YouTubeVideoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = YouTubeVideoForm()
+    return render(request, 'upload_video.html', {'form': form})
+
+
+def play_video(request, video_id):
+    video = YouTubeVideo.objects.get(id=video_id)
+    return render(request, 'play_video.html', {'video': video})
+

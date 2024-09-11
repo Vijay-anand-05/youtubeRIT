@@ -57,3 +57,16 @@ class StaffRegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+
+
+from django import forms
+from .models import YouTubeVideo
+
+class YouTubeVideoForm(forms.ModelForm):
+    class Meta:
+        model = YouTubeVideo
+        fields = ['title', 'video_url', 'description']
+
+
