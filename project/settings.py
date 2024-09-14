@@ -149,8 +149,11 @@ AUTHENTICATION_BACKENDS = [
 #     "app\static\css",  # BASE_DIR is the directory that contains your manage.py file
 # ]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 

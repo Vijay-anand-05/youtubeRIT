@@ -59,14 +59,18 @@ class StaffRegistrationForm(UserCreationForm):
         return user
 
 
-
-
 from django import forms
-from .models import YouTubeVideo
+from .models import Video
 
-class YouTubeVideoForm(forms.ModelForm):
+class VideoUploadForm(forms.ModelForm):
     class Meta:
-        model = YouTubeVideo
-        fields = ['title', 'video_url', 'description']
+        model = Video
+        fields = ['title', 'description', 'youtube_url', 'category']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'youtube_url': forms.URLInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 
